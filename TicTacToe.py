@@ -7,9 +7,17 @@ class Game:
         self.Board = ['-']*9
         self.result = False
         self.winner=None
+        self.turn=False
         self.count= 0
 
-
+    def DrawBoard(self):
+        temp= 0
+        for i in self.Board:
+            print(i, end=" ")
+            temp+=1
+            if temp==3:
+                temp=0
+                print('\n')
 
     def CheckRule(self,player):
         if self.Board[0]==self.Board[1]==self.Board[2]!='-':
@@ -44,16 +52,19 @@ class Game:
                 print("Please choose another position ")
         self.CheckRule(player)
 
-    def Start(self,turn, player):
+    def Start(self):
         while(self.result==False and self.count<9):
-
-            if(turn==False):
-                self.Update(player)
+            self.DrawBoard()
+            if(self.turn==False):
+                self.Update(p1)
                 self.turn= True
             else:
-                self.Update(player)
+                self.Update(p2)
                 self.turn = False
         if(self.result==True):
-            return self.winner
+            self.DrawBoard()
+            print("winner is: ",self.winner)
         else:
-            return 0
+            print("Draw")
+Board=Game()
+Board.Start()
