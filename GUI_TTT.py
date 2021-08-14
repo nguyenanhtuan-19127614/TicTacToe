@@ -24,8 +24,11 @@ class AppTicTacToe(QWidget):
         self.setWindowTitle(self.title)
         self.setWindowIcon(QtGui.QIcon(self.Icon))
         self.setGeometry(500, 500, self.width, self.height)
+        #WinnerButton
         self.Winner=QPushButton(self)
         self.Winner.setGeometry(8,350,300,50)
+        self.Winner.setStyleSheet("background-color: cyan;")
+        self.Winner.setFont(QFont('Arial', 25))
         self.Winner.setEnabled(False)
         #ButtonList
         for i in range(3):
@@ -39,6 +42,7 @@ class AppTicTacToe(QWidget):
             for j in range(3):
                 self.button_list[i][j].setGeometry(button_x * i + 20, button_y * j + 20, 90, 85)
                 self.button_list[i][j].setFont(QFont('Arial', 50))
+                self.button_list[i][j].setStyleSheet("background-color: Yellow;")
                 self.button_list[i][j].clicked.connect(self.Update)
 
         self.show()
@@ -63,6 +67,8 @@ class AppTicTacToe(QWidget):
                 self.Winner.setText("X is the Winner")
             else:
                 self.Winner.setText("O is the Winner")
+        if(self.count==9):
+            self.Winner.setText("Draw")
 
     def Rule(self):
         for i in range(3):
