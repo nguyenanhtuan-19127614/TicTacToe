@@ -30,6 +30,13 @@ class AppTicTacToe(QWidget):
         self.Winner.setStyleSheet("background-color: cyan;")
         self.Winner.setFont(QFont('Arial', 25))
         self.Winner.setEnabled(False)
+        # ResetButton
+        self.Reset = QPushButton(self)
+        self.Reset.setText("Reset")
+        self.Reset.setGeometry(8, 400, 150, 50)
+        self.Reset.setFont(QFont('Arial', 25))
+        self.Reset.clicked.connect(self.ResetGame)
+
         #ButtonList
         for i in range(3):
             temp = []
@@ -92,10 +99,43 @@ class AppTicTacToe(QWidget):
                 == self.button_list[2][0].text() != ""):
             self.Result = True
             return
+    def ResetGame(self):
+        self.count=0
+        self.turn = False
+        self.Result = False
+        for i in self.button_list:
+            for j in i:
+                j.setEnabled(True)
+                j.setText("")
 
+class MenuWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.title = 'TicTacToe-Game-NAT'
+        self.Icon = 'TicTacToe.png'
+        self.game=AppTicTacToe()
+        self.width = 315
+        self.height = 500
+
+    def Menu(self):
+        # WindowGui
+        self.setWindowTitle(self.title)
+        self.setWindowIcon(QtGui.QIcon(self.Icon))
+        self.setGeometry(500, 500, self.width, self.height)
+        # StartButton
+        self.Start = QPushButton(self)
+        self.Start.setText("Start")
+        self.Start.setGeometry(35, int(self.height/4), 250, 50)
+        self.Start.setFont(QFont('Arial', 25))
+        self.Start.clicked.connect(self.ChangGameWindow)
+
+        self.show()
+    def ChangGameWindow(self):
+        self.hide()
+        self.game.GameWindow()
 
 app = QApplication(sys.argv)
-ex = AppTicTacToe()
-ex.GameWindow()
+ex = MenuWindow()
+ex.Menu()
 sys.exit(app.exec_())
 
