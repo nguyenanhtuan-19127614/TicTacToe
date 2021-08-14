@@ -19,6 +19,12 @@ class AppTicTacToe(QWidget):
         self.count=0
         self.button_list= []
 
+        # BackButton
+        self.Back = QPushButton(self)
+        self.Back.setText("Back")
+        self.Back.setGeometry(151, 400, 150, 50)
+        self.Back.setFont(QFont('Arial', 25))
+        self.Back.clicked.connect(self.hide)
 
     def GameWindow(self):
         #WindowGui
@@ -37,12 +43,7 @@ class AppTicTacToe(QWidget):
         self.Reset.setGeometry(8, 400, 150, 50)
         self.Reset.setFont(QFont('Arial', 25))
         self.Reset.clicked.connect(self.ResetGame)
-        #BackButton
-        self.Back = QPushButton(self)
-        self.Back.setText("Back")
-        self.Back.setGeometry(151, 400, 150, 50)
-        self.Back.setFont(QFont('Arial', 25))
-        self.Back.clicked.connect(sys.exit)
+
 
         #ButtonList
         for i in range(3):
@@ -126,27 +127,33 @@ class MenuWindow(QMainWindow):
         self.width = 315
         self.height = 500
 
+        # StartButton
+        self.Start = QPushButton(self)
+        self.Start.setText("Start")
+        self.Start.setGeometry(35, int(self.height / 4), 250, 50)
+        self.Start.setFont(QFont('Arial', 25))
+        self.Start.clicked.connect(self.hide)
+
     def Menu(self):
         # WindowGui
         self.setWindowTitle(self.title)
         self.setWindowIcon(QtGui.QIcon(self.Icon))
         self.setGeometry(500, 500, self.width, self.height)
-        # StartButton
-        self.Start = QPushButton(self)
-        self.Start.setText("Start")
-        self.Start.setGeometry(35, int(self.height/4), 250, 50)
-        self.Start.setFont(QFont('Arial', 25))
-        self.Start.clicked.connect(self.ChangGameWindow)
 
         self.show()
-    def ChangGameWindow(self):
-        self.hide()
-        self.game.GameWindow()
 
 
+class FinalApp():
+    def __init__(self):
+        self.TicTacToe = AppTicTacToe()
+        self.Menu = MenuWindow()
+        self.Menu.Start.clicked.connect(self.TicTacToe.GameWindow)
+        self.TicTacToe.Back.clicked.connect(self.Menu.Menu)
+
+        self.Menu.Menu()
 
 app = QApplication(sys.argv)
-ex = MenuWindow()
-ex.Menu()
+game=FinalApp()
+
 sys.exit(app.exec_())
 
