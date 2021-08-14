@@ -13,6 +13,7 @@ class AppTicTacToe(QWidget):
         self.width = 315
         self.height = 500
 
+
         self.turn=False
         self.Result=False
         self.count=0
@@ -36,6 +37,12 @@ class AppTicTacToe(QWidget):
         self.Reset.setGeometry(8, 400, 150, 50)
         self.Reset.setFont(QFont('Arial', 25))
         self.Reset.clicked.connect(self.ResetGame)
+        #BackButton
+        self.Back = QPushButton(self)
+        self.Back.setText("Back")
+        self.Back.setGeometry(151, 400, 150, 50)
+        self.Back.setFont(QFont('Arial', 25))
+        self.Back.clicked.connect(sys.exit)
 
         #ButtonList
         for i in range(3):
@@ -108,6 +115,8 @@ class AppTicTacToe(QWidget):
                 j.setEnabled(True)
                 j.setText("")
 
+
+
 class MenuWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -133,6 +142,8 @@ class MenuWindow(QMainWindow):
     def ChangGameWindow(self):
         self.hide()
         self.game.GameWindow()
+
+
 
 app = QApplication(sys.argv)
 ex = MenuWindow()
